@@ -1,8 +1,8 @@
-﻿using MoltenCore.Core.Interfaces;
+using MoltenCore.Interfaces;
 
-namespace MoltenCore.Core
+namespace MoltenCore
 {
-    internal class NLogLogger : ILogger
+    public class NLogLogger : ILogger
     {
         public Task LogException(Exception exception, string? requestId = null, Dictionary<string, string>? properties = null)
         {
@@ -15,3 +15,4 @@ namespace MoltenCore.Core
         }
     }
 }
+

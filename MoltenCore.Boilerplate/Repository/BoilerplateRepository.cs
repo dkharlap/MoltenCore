@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MoltenCore.Boilerplate.Interfaces;
 using MoltenCore.Boilerplate.Interfaces.Models;
-using MoltenCore.Core;
+using MoltenCore;
 
 namespace MoltenCore.Boilerplate.Repository
 {
@@ -86,3 +86,4 @@ namespace MoltenCore.Boilerplate.Repository
         #endregion
     }
 }
+

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MoltenCore.Core.Repository;
+using MoltenCore.Repository;
 
-namespace MoltenCore.Core.Extensions
+namespace MoltenCore.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -28,3 +28,4 @@ namespace MoltenCore.Core.Extensions
         }
     }
 }
+

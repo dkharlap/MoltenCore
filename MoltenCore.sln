@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoltenCore.Boilerplate", "MoltenCore.Boilerplate\MoltenCore.Boilerplate.csproj", "{04C37B40-D009-498B-A2E7-52DE64CCFFDE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoltenCore.Core", "MoltenCore.Core\MoltenCore.Core.csproj", "{7ED1F839-9914-4C9C-B397-54A1583480A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoltenCore", "MoltenCore\MoltenCore.csproj", "{7ED1F839-9914-4C9C-B397-54A1583480A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{01C23F2D-A958-46B5-971D-B271A5738679}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,3 +34,4 @@ Global
 		SolutionGuid = {7C29129D-DADC-4586-A924-A0468FE79E3E}
 	EndGlobalSection
 EndGlobal
+

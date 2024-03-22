@@ -1,4 +1,4 @@
-﻿namespace MoltenCore.Core
+namespace MoltenCore
 {
     public class ApplicationExceptionCode : ApplicationException
     {
@@ -25,3 +25,4 @@
         NotFound,
     }
 }
+

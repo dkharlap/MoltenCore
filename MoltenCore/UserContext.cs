@@ -1,6 +1,6 @@
-﻿using MoltenCore.Core.Interfaces;
+using MoltenCore.Interfaces;
 
-namespace MoltenCore.Core
+namespace MoltenCore
 {
     public class UserContext : IUserContext
     {

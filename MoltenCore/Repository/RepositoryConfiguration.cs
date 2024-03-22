@@ -1,4 +1,4 @@
-﻿namespace MoltenCore.Core.Repository
+namespace MoltenCore.Repository
 {
     public class RepositoryConfiguration
     {
@@ -58,3 +58,4 @@
         public string MigrationHistoryTable { get; }
     }
 }
+

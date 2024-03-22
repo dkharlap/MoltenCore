@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MoltenCore.Boilerplate.Interfaces;
 using MoltenCore.Boilerplate.Interfaces.Models;
-using MoltenCore.Core;
-using MoltenCore.Core.Interfaces;
+using MoltenCore;
+using MoltenCore.Interfaces;
 
 namespace MoltenCore.Boilerplate
 {
