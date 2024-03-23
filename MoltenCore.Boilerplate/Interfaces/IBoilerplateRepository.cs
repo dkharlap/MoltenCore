@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MoltenCore.Boilerplate.Interfaces.Models;
+﻿using MoltenCore.Boilerplate.Interfaces.Models;
 
 namespace MoltenCore.Boilerplate.Interfaces
 {
@@ -43,11 +42,5 @@ namespace MoltenCore.Boilerplate.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task Delete(string id, CancellationToken cancellationToken);
-    }
-
-
-    public abstract class sss : DbContext
-    {
-
     }
 }
