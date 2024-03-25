@@ -20,3 +20,7 @@ Retries for transient fault handling
 
 
 		Customization: id type, db engine, health endpoint name
+
+
+set MoltenCoreBoilerplate__Repository__ConnectionString "true"
+set MoltenCoreBoilerplate__Repository__Schema "boilerplate"

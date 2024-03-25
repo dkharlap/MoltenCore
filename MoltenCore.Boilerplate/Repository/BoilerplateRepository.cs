@@ -1,19 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using MoltenCore.Boilerplate.Interfaces;
 using MoltenCore.Boilerplate.Interfaces.Models;
-using MoltenCore;
+using MoltenCore.Interfaces;
 
 namespace MoltenCore.Boilerplate.Repository
 {
-    public class BoilerplateRepository : IBoilerplateRepository
+    public class BoilerplateRepository(IUserContext userContext, BoilerplateDbContext dbContext, BoilerplateDbContext dbReadOnlyContext) : IBoilerplateRepository
     {
-        public BoilerplateRepository(UserContext userContext, BoilerplateDbContext dbContext, BoilerplateDbContext dbReadOnlyContext)
-        {
-            _userContext = userContext;
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _dbReadOnlyContext = dbReadOnlyContext ?? throw new ArgumentNullException(nameof(dbReadOnlyContext));
-        }
-
         /// <summary>
         /// See <see cref="IBoilerplateRepository.Create"/>
         /// </summary>
@@ -37,7 +30,7 @@ namespace MoltenCore.Boilerplate.Repository
         /// </summary>
         public async Task<Interfaces.Models.Boilerplate> Get(string id, CancellationToken cancellationToken)
         {
-            var entity = await _dbReadOnlyContext.Boilerplates.FindAsync(new object[] { id }, cancellationToken) 
+            var entity = await _dbReadOnlyContext.Boilerplates.FindAsync([id], cancellationToken) 
                 ?? throw new ApplicationExceptionCode(ExceptionCode.NotFound, "Could not find boilerplate with id " + id);
            
             return new Interfaces.Models.Boilerplate(
@@ -52,7 +45,7 @@ namespace MoltenCore.Boilerplate.Repository
         /// </summary>
         public async Task Update(string id, BoilerplateUpdate boilerplate, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Boilerplates.FindAsync(new object[] { id }, cancellationToken)
+            var entity = await _dbContext.Boilerplates.FindAsync([id], cancellationToken)
                 ?? throw new ApplicationExceptionCode(ExceptionCode.NotFound, "Could not find boilerplate with id " + id);
 
             // Add code updating fields by updating them one by one using entity.[Property] = boilerplate.property;
@@ -65,7 +58,7 @@ namespace MoltenCore.Boilerplate.Repository
         /// </summary>
         public async Task Delete(string id, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Boilerplates.FindAsync(new object[] { id }, cancellationToken) 
+            var entity = await _dbContext.Boilerplates.FindAsync([id], cancellationToken) 
                 ?? throw new ApplicationExceptionCode(ExceptionCode.NotFound, "Could not find boilerplate with id " + id);
 
             _dbContext.Boilerplates.Remove(entity);
@@ -80,9 +73,9 @@ namespace MoltenCore.Boilerplate.Repository
         }
 
         #region Private members
-        private readonly BoilerplateDbContext _dbContext;
-        private readonly BoilerplateDbContext _dbReadOnlyContext;
-        private readonly UserContext _userContext;
+        private readonly BoilerplateDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        private readonly BoilerplateDbContext _dbReadOnlyContext = dbReadOnlyContext ?? throw new ArgumentNullException(nameof(dbReadOnlyContext));
+        private readonly IUserContext _userContext = userContext;
         #endregion
     }
 }

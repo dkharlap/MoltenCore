@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace MoltenCore.Boilerplate.Repository
 {
-    public class BoilerplateReadOnlyDbContext : BoilerplateDbContext // Is there a simple way to do the same without breaking Liskov principle?
+    public class BoilerplateReadOnlyDbContext : BoilerplateDbContext // Inherited class limits the behaviour of the base class. Is there a simple way to do the same without breaking Liskov principle?
     {
-        public BoilerplateReadOnlyDbContext()
+        public BoilerplateReadOnlyDbContext(DbContextOptions options)
+            : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }        

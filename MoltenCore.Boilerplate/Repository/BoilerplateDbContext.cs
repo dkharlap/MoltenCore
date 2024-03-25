@@ -2,7 +2,7 @@
 
 namespace MoltenCore.Boilerplate.Repository
 {
-    public class BoilerplateDbContext : DbContext
+    public class BoilerplateDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<DbModels.Boilerplate> Boilerplates { get; set; }
     }

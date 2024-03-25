@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace MoltenCore.Repository
 {
     public class RepositoryConfiguration
@@ -5,8 +7,10 @@ namespace MoltenCore.Repository
         public RepositoryConfiguration(
             string connectionString, 
             string schema, 
-            byte retryMaxCount = 6, int retryMaxDelay = 10000, IEnumerable<int>? retryErrorNumbersToAdd = null, 
-            string migrationHistoryTable = "__EFMigrationsHistory")
+            byte retryMaxCount = defaultRetryMaxCount, 
+            int retryMaxDelay = defaultRetryMaxDelay, 
+            IEnumerable<int>? retryErrorNumbersToAdd = null, 
+            string migrationHistoryTable = defaultMigrationHistoryTable)
         {
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             Schema = schema ?? throw new ArgumentNullException(nameof(schema));
@@ -24,6 +28,16 @@ namespace MoltenCore.Repository
             }
 
             MigrationHistoryTable = migrationHistoryTable ?? throw new ArgumentNullException(nameof(migrationHistoryTable));
+        }
+
+        public RepositoryConfiguration(IConfigurationSection configSection)
+        {
+            ConnectionString = configSection.GetValue<string>("ConnectionString") ?? throw new Exception("ConnectionString is not set");
+            Schema = configSection.GetValue<string>("Schema") ?? throw new Exception("Schema is not set");
+            RetryMaxCount = configSection.GetValue("RetryMaxCount", defaultRetryMaxCount);
+            RetryMaxDelay = configSection.GetValue("RetryMaxDelay", defaultRetryMaxDelay);
+            RetryErrorNumbersToAdd = configSection.GetValue<IEnumerable<int>?>("RetryErrorNumbersToAdd");
+            MigrationHistoryTable = configSection.GetValue("MigrationHistoryTable", defaultMigrationHistoryTable) ?? throw new Exception("MigrationHistoryTable is not set");
         }
 
 
@@ -56,6 +70,10 @@ namespace MoltenCore.Repository
         /// Migration history table name
         /// </summary>
         public string MigrationHistoryTable { get; }
+
+        private const byte defaultRetryMaxCount = 6;
+        private const int defaultRetryMaxDelay = 10000;
+        private const string defaultMigrationHistoryTable = "__EFMigrationsHistory";
     }
 }
 

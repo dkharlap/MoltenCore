@@ -1,25 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using MoltenCore.Boilerplate.Interfaces;
 using MoltenCore.Boilerplate.Interfaces.Models;
-using MoltenCore;
 using MoltenCore.Interfaces;
 
 namespace MoltenCore.Boilerplate
 {
+    /// <summary>
+    /// Ctor
+    /// </summary>
     [Route("boilerplates/v1")]
     [ApiController]
     [ProducesResponseType(typeof(ApplicationExceptionCode), 401)]
     [ProducesResponseType(typeof(ApplicationExceptionCode), 403)]
-    public class BoilerplateWebApi : ControllerBase
+    public class BoilerplateWebApi(IBoilerplateDomain domain, IUserContext userContext) : ControllerBase
     {
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        public BoilerplateWebApi(IBoilerplateDomain domain)
-        {
-            _domain = domain;
-            _userContext = new UserContext("default");
-        }
 
         /// <summary>
         /// Creates new boilerplate.
@@ -103,8 +97,8 @@ namespace MoltenCore.Boilerplate
         }
 
         #region Private members
-        private readonly IBoilerplateDomain _domain;
-        private readonly IUserContext _userContext;
+        private readonly IBoilerplateDomain _domain = domain;
+        private readonly IUserContext _userContext = userContext;
         #endregion
     }
 }
