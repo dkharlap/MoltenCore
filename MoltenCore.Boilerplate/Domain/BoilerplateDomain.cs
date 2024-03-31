@@ -1,8 +1,9 @@
-﻿using MoltenCore.Boilerplate.Interfaces;
-using MoltenCore.Boilerplate.Interfaces.Models;
+﻿using MoltenCore.Boilerplate.Domain.Interfaces;
+using MoltenCore.Boilerplate.Models;
+using MoltenCore.Boilerplate.Repository.Interfaces;
 using System.Threading;
 
-namespace MoltenCore.Boilerplate
+namespace MoltenCore.Boilerplate.Domain
 {
     public class BoilerplateDomain : IBoilerplateDomain
     {
@@ -11,12 +12,12 @@ namespace MoltenCore.Boilerplate
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public Task<Interfaces.Models.Boilerplate> Get(string id, CancellationToken cancellationToken)
+        public Task<Models.Boilerplate> Get(string id, CancellationToken cancellationToken)
         {
             return _repository.Get(id, cancellationToken);
         }
 
-        public Task<IEnumerable<Interfaces.Models.Boilerplate>> GetList(CancellationToken cancellationToken)
+        public Task<IEnumerable<Models.Boilerplate>> GetList(CancellationToken cancellationToken)
         {
             return _repository.GetList(cancellationToken);
         }

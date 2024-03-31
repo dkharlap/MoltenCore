@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoltenCore.Boilerplate", "MoltenCore.Boilerplate\MoltenCore.Boilerplate.csproj", "{4047D103-D47E-4F77-A29F-3390A6C945D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoltenCore.Boilerplate", "MoltenCore.Boilerplate\MoltenCore.Boilerplate.csproj", "{4047D103-D47E-4F77-A29F-3390A6C945D2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9D4A1D20-1C4C-4C7F-81D8-F3C6B7D9CC39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{4047D103-D47E-4F77-A29F-3390A6C945D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4047D103-D47E-4F77-A29F-3390A6C945D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4047D103-D47E-4F77-A29F-3390A6C945D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D4A1D20-1C4C-4C7F-81D8-F3C6B7D9CC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4A1D20-1C4C-4C7F-81D8-F3C6B7D9CC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4A1D20-1C4C-4C7F-81D8-F3C6B7D9CC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4A1D20-1C4C-4C7F-81D8-F3C6B7D9CC39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

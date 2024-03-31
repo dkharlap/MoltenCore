@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using MoltenCore.Boilerplate.Interfaces;
-using MoltenCore.Boilerplate.Interfaces.Models;
+using MoltenCore.Boilerplate.Models;
+using MoltenCore.Boilerplate.Repository.Interfaces;
 using MoltenCore.Interfaces;
 
 namespace MoltenCore.Boilerplate.Repository
@@ -28,12 +28,12 @@ namespace MoltenCore.Boilerplate.Repository
         /// <summary>
         /// See <see cref="IBoilerplateRepository.Get"/>
         /// </summary>
-        public async Task<Interfaces.Models.Boilerplate> Get(string id, CancellationToken cancellationToken)
+        public async Task<Models.Boilerplate> Get(string id, CancellationToken cancellationToken)
         {
             var entity = await _dbReadOnlyContext.Boilerplates.FindAsync([id], cancellationToken) 
                 ?? throw new ApplicationExceptionCode(ExceptionCode.NotFound, "Could not find boilerplate with id " + id);
            
-            return new Interfaces.Models.Boilerplate(
+            return new Models.Boilerplate(
                 entity.Id,
                 entity.CreatedByUserId,
                 new DateTime(entity.CreatedOn.Ticks, DateTimeKind.Utc)
@@ -65,10 +65,10 @@ namespace MoltenCore.Boilerplate.Repository
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Interfaces.Models.Boilerplate>> GetList(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Models.Boilerplate>> GetList(CancellationToken cancellationToken)
         {
             return await _dbReadOnlyContext.Boilerplates.Select(
-                e => new Interfaces.Models.Boilerplate(e.Id, e.CreatedByUserId, e.CreatedOn)
+                e => new Models.Boilerplate(e.Id, e.CreatedByUserId, e.CreatedOn)
             ).ToListAsync(cancellationToken: cancellationToken);
         }
 

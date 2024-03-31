@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using MoltenCore.Boilerplate.Interfaces;
-using MoltenCore.Boilerplate.Interfaces.Models;
+using MoltenCore.Boilerplate.Domain.Interfaces;
+using MoltenCore.Boilerplate.Models;
 using MoltenCore.Interfaces;
 
 namespace MoltenCore.Boilerplate
@@ -40,10 +40,10 @@ namespace MoltenCore.Boilerplate
         /// <response code="400">Could not get the boilerplate by provided ID.</response>
         /// <response code="500">Oops! Something went wrong.</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Interfaces.Models.Boilerplate), 200)]
+        [ProducesResponseType(typeof(Models.Boilerplate), 200)]
         [ProducesResponseType(typeof(ApplicationExceptionCode), 400)]
         [ProducesResponseType(typeof(ApplicationExceptionCode), 500)]
-        public async Task<Interfaces.Models.Boilerplate> Get(string id, CancellationToken cancellationToken = default)
+        public async Task<Models.Boilerplate> Get(string id, CancellationToken cancellationToken = default)
         {
             var entity = await _domain.Get(id, cancellationToken);
             return entity;
@@ -56,10 +56,10 @@ namespace MoltenCore.Boilerplate
         /// <response code="400">Could not get the boilerplate by provided ID.</response>
         /// <response code="500">Oops! Something went wrong.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(Interfaces.Models.Boilerplate), 200)]
+        [ProducesResponseType(typeof(Models.Boilerplate), 200)]
         [ProducesResponseType(typeof(ApplicationExceptionCode), 400)]
         [ProducesResponseType(typeof(ApplicationExceptionCode), 500)]
-        public async Task<IEnumerable<Interfaces.Models.Boilerplate>> GetList(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Models.Boilerplate>> GetList(CancellationToken cancellationToken = default)
         {
             var entities = await _domain.GetList(cancellationToken);
             return entities;

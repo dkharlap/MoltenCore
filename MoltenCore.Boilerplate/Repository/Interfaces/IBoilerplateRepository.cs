@@ -1,6 +1,6 @@
-﻿using MoltenCore.Boilerplate.Interfaces.Models;
+﻿using MoltenCore.Boilerplate.Models;
 
-namespace MoltenCore.Boilerplate.Interfaces
+namespace MoltenCore.Boilerplate.Repository.Interfaces
 {
     public interface IBoilerplateRepository
     {

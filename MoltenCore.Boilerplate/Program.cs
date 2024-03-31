@@ -1,42 +1,31 @@
-using Microsoft.EntityFrameworkCore;
 using MoltenCore;
-using MoltenCore.Boilerplate;
-using MoltenCore.Boilerplate.Interfaces;
+using MoltenCore.Boilerplate.Domain;
+using MoltenCore.Boilerplate.Domain.Interfaces;
 using MoltenCore.Boilerplate.Repository;
+using MoltenCore.Boilerplate.Repository.Interfaces;
+using MoltenCore.Extensions;
 using MoltenCore.Interfaces;
 using MoltenCore.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvironmentVariables(prefix: "MoltenCoreBoilerplate_");
+builder.Configuration.AddEnvironmentVariables("BOILERPLATE");
 
 // Add context
 builder.Services.AddScoped<IUserContext, UserContext>();
 
 // Add repository
-var configRaw = builder.Configuration.GetSection("Repository");
+var repositoryConfigurationSection = builder.Configuration.GetSection("BOILERPLATE:REPOSITORY");
 
-var config = new RepositoryConfiguration(
-    "Provider=SQLOLEDB.1;Password=boilerplate_reader_writer;Persist Security Info=True;User ID=boilerplate_reader_writer;Initial Catalog=IRDB;Data Source=DS",
-    "boilerplate");
-builder.Services.AddSingleton(config);
+var repositoryConfiguration = new RepositoryConfiguration(repositoryConfigurationSection);
+builder.Services.AddSqlServerDbContext<BoilerplateDbContext>(repositoryConfiguration);
 
-builder.Services.AddDbContext<BoilerplateDbContext>(options =>
-    options.UseSqlServer(config.ConnectionString, sqlOptions =>
-    {
-        sqlOptions.MigrationsHistoryTable(config.MigrationHistoryTable, config.Schema);
-
-        if (config.RetryMaxCount > 0)
-        {
-            sqlOptions.EnableRetryOnFailure(config.RetryMaxCount, TimeSpan.FromMilliseconds(config.RetryMaxDelay), config.RetryErrorNumbersToAdd);
-        }
-    }));
-
+var repositoryConfigurationReadOnly = new RepositoryConfiguration(repositoryConfigurationSection, true);
+builder.Services.AddSqlServerDbContext<BoilerplateReadOnlyDbContext>(repositoryConfigurationReadOnly);
 
 builder.Services.AddScoped<IBoilerplateRepository, BoilerplateRepository>();
 
 // Configure domain
 builder.Services.AddScoped<IBoilerplateDomain, BoilerplateDomain>();
-
 
 // Add API services to the container.
 builder.Services.AddControllers();

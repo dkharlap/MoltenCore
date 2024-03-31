@@ -1,4 +1,4 @@
-﻿namespace MoltenCore.Boilerplate.Interfaces.Models
+﻿namespace MoltenCore.Boilerplate.Models
 {
     public class Boilerplate : BoilerplateBase
     {

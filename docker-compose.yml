@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  moltencore.boilerplate:
+    image: ${DOCKER_REGISTRY-}moltencoreboilerplate
+    ports:
+      - ${BOILERPLATE_PORT}:8081
+    build:
+      context: .
+      dockerfile: MoltenCore.Boilerplate/Dockerfile
+    environment:
+      BOILERPLATE__REPOSITORY__CONNECTION_STRING: 'Password=${BOILERPLATE_DB_PASSWORD};Persist Security Info=True;User ID=${BOILERPLATE_DB_USER};Initial Catalog=${BOILERPLATE_DB};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE};Data Source=${DB_DATA_SOURCE}'
+      BOILERPLATE__REPOSITORY__CONNECTION_STRING_READ_ONLY: 'Password=${BOILERPLATE_DB_PASSWORD_READ_ONLY};Persist Security Info=True;User ID=${BOILERPLATE_DB_USER_READ_ONLY};Initial Catalog=${BOILERPLATE_DB};TrustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE};Data Source=${DB_DATA_SOURCE}'
+      BOILERPLATE__REPOSITORY__SCHEMA: 'boilerplate'

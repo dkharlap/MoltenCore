@@ -5,11 +5,11 @@ namespace MoltenCore.Repository
     public class RepositoryConfiguration
     {
         public RepositoryConfiguration(
-            string connectionString, 
-            string schema, 
-            byte retryMaxCount = defaultRetryMaxCount, 
-            int retryMaxDelay = defaultRetryMaxDelay, 
-            IEnumerable<int>? retryErrorNumbersToAdd = null, 
+            string connectionString,
+            string schema,
+            byte retryMaxCount = defaultRetryMaxCount,
+            int retryMaxDelay = defaultRetryMaxDelay,
+            IEnumerable<int>? retryErrorNumbersToAdd = null,
             string migrationHistoryTable = defaultMigrationHistoryTable)
         {
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
@@ -30,14 +30,19 @@ namespace MoltenCore.Repository
             MigrationHistoryTable = migrationHistoryTable ?? throw new ArgumentNullException(nameof(migrationHistoryTable));
         }
 
-        public RepositoryConfiguration(IConfigurationSection configSection)
+        public RepositoryConfiguration(IConfigurationSection configSection, bool readOnly = false, ConfigurationKeys? configurationKeys = null)
         {
-            ConnectionString = configSection.GetValue<string>("ConnectionString") ?? throw new Exception("ConnectionString is not set");
-            Schema = configSection.GetValue<string>("Schema") ?? throw new Exception("Schema is not set");
-            RetryMaxCount = configSection.GetValue("RetryMaxCount", defaultRetryMaxCount);
-            RetryMaxDelay = configSection.GetValue("RetryMaxDelay", defaultRetryMaxDelay);
-            RetryErrorNumbersToAdd = configSection.GetValue<IEnumerable<int>?>("RetryErrorNumbersToAdd");
-            MigrationHistoryTable = configSection.GetValue("MigrationHistoryTable", defaultMigrationHistoryTable) ?? throw new Exception("MigrationHistoryTable is not set");
+            configurationKeys ??= new ConfigurationKeys();
+
+            ConnectionString = readOnly ?
+                configSection[configurationKeys.ConnectionStringReadOnly] ?? throw new Exception($"{configurationKeys.ConnectionStringReadOnly} is not set") :
+                configSection[configurationKeys.ConnectionString] ?? throw new Exception($"{configurationKeys.ConnectionString} is not set");
+
+            Schema = configSection[configurationKeys.Schema] ?? throw new Exception($"{configurationKeys.Schema} is not set");
+            RetryMaxCount = configSection.GetValue(configurationKeys.RetryMaxCount, defaultRetryMaxCount);
+            RetryMaxDelay = configSection.GetValue(configurationKeys.RetryMaxDelay, defaultRetryMaxDelay);
+            RetryErrorNumbersToAdd = configSection.GetValue<IEnumerable<int>?>(configurationKeys.RetryErrorNumbersToAdd);
+            MigrationHistoryTable = configSection.GetValue(configurationKeys.MigrationHistoryTable, defaultMigrationHistoryTable) ?? throw new Exception("MigrationHistoryTable is not set");
         }
 
 
@@ -74,6 +79,24 @@ namespace MoltenCore.Repository
         private const byte defaultRetryMaxCount = 6;
         private const int defaultRetryMaxDelay = 10000;
         private const string defaultMigrationHistoryTable = "__EFMigrationsHistory";
+
+        public class ConfigurationKeys(
+            string connectionString = "CONNECTION_STRING",
+            string connectionStringReadOnly = "CONNECTION_STRING_READ_ONLY",
+            string schema = "SCHEMA",
+            string retryMaxCount = "RETRY_MAX_COUNT",
+            string retryMaxDelay = "RETRY_MAX_DELAY",
+            string retryErrorNumbersToAdd = "RETRY_ERROR_NUMBERS_TO_ADD",
+            string migrationHistoryTable = "MIGRATION_HISTORY_TABLE")
+        {
+            public string ConnectionString { get; init; } = connectionString;
+            public string ConnectionStringReadOnly { get; init; } = connectionStringReadOnly;
+            public string Schema { get; init; } = schema;
+            public string RetryMaxCount { get; init; } = retryMaxCount;
+            public string RetryMaxDelay { get; init; } = retryMaxDelay;
+            public string RetryErrorNumbersToAdd { get; init; } = retryErrorNumbersToAdd;
+            public string MigrationHistoryTable { get; init; } = migrationHistoryTable;
+        }
     }
 }
 
