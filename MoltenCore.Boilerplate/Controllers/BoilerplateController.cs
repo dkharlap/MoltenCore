@@ -3,7 +3,7 @@ using MoltenCore.Boilerplate.Domain.Interfaces;
 using MoltenCore.Boilerplate.Models;
 using MoltenCore.Interfaces;
 
-namespace MoltenCore.Boilerplate
+namespace MoltenCore.Boilerplate.Controllers
 {
     /// <summary>
     /// Ctor
@@ -12,7 +12,7 @@ namespace MoltenCore.Boilerplate
     [ApiController]
     [ProducesResponseType(typeof(ApplicationExceptionCode), 401)]
     [ProducesResponseType(typeof(ApplicationExceptionCode), 403)]
-    public class BoilerplateWebApi(IBoilerplateDomain domain, IUserContext userContext) : ControllerBase
+    public class BoilerplateController(IBoilerplateDomain domain, IUserContext userContext) : ControllerBase
     {
 
         /// <summary>

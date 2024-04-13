@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace MoltenCore.Repository
@@ -34,15 +35,23 @@ namespace MoltenCore.Repository
         {
             configurationKeys ??= new ConfigurationKeys();
 
-            ConnectionString = readOnly ?
-                configSection[configurationKeys.ConnectionStringReadOnly] ?? throw new Exception($"{configurationKeys.ConnectionStringReadOnly} is not set") :
-                configSection[configurationKeys.ConnectionString] ?? throw new Exception($"{configurationKeys.ConnectionString} is not set");
-
             Schema = configSection[configurationKeys.Schema] ?? throw new Exception($"{configurationKeys.Schema} is not set");
-            RetryMaxCount = configSection.GetValue(configurationKeys.RetryMaxCount, defaultRetryMaxCount);
-            RetryMaxDelay = configSection.GetValue(configurationKeys.RetryMaxDelay, defaultRetryMaxDelay);
-            RetryErrorNumbersToAdd = configSection.GetValue<IEnumerable<int>?>(configurationKeys.RetryErrorNumbersToAdd);
             MigrationHistoryTable = configSection.GetValue(configurationKeys.MigrationHistoryTable, defaultMigrationHistoryTable) ?? throw new Exception("MigrationHistoryTable is not set");
+
+            if (!EF.IsDesignTime)
+            {
+                ConnectionString = readOnly ?
+                    configSection[configurationKeys.ConnectionStringReadOnly] ?? throw new Exception($"{configurationKeys.ConnectionStringReadOnly} is not set") :
+                    configSection[configurationKeys.ConnectionString] ?? throw new Exception($"{configurationKeys.ConnectionString} is not set");
+
+                RetryMaxCount = configSection.GetValue(configurationKeys.RetryMaxCount, defaultRetryMaxCount);
+                RetryMaxDelay = configSection.GetValue(configurationKeys.RetryMaxDelay, defaultRetryMaxDelay);
+                RetryErrorNumbersToAdd = configSection.GetValue<IEnumerable<int>?>(configurationKeys.RetryErrorNumbersToAdd);
+            }
+            else
+            {
+                ConnectionString = "";
+            }
         }
 
 

@@ -14,7 +14,8 @@ builder.Configuration.AddEnvironmentVariables("BOILERPLATE");
 builder.Services.AddScoped<IUserContext, UserContext>();
 
 // Add repository
-var repositoryConfigurationSection = builder.Configuration.GetSection("BOILERPLATE:REPOSITORY");
+
+var repositoryConfigurationSection = builder.Configuration.GetSection("REPOSITORY");
 
 var repositoryConfiguration = new RepositoryConfiguration(repositoryConfigurationSection);
 builder.Services.AddSqlServerDbContext<BoilerplateDbContext>(repositoryConfiguration);
@@ -33,7 +34,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
-
 
 var app = builder.Build();
 
