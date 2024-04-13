@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MoltenCore.Boilerplate.Repository
 {
-    public class BoilerplateDbContext(DbContextOptions options) : DbContext(options)
+    public class BoilerplateDbContext(DbContextOptions<BoilerplateDbContext> options) : DbContext(options)
     {
         public DbSet<DbModels.Boilerplate> Boilerplates { get; set; }
 
